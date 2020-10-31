@@ -45,7 +45,7 @@ export const App: FC = () => {
 
   return (
     <View>
-      <Text>3252</Text>
+      <Text>Main page</Text>
     </View>
   );
 };
