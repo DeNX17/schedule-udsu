@@ -1,0 +1,5 @@
+export enum LoadingStatusEnum {
+  GETTING_LINK = 'GETTING_LINK',
+  DOWNLOADING = 'DOWNLOADING',
+  OPENING = 'OPENING',
+}

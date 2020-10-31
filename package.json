@@ -4,10 +4,14 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
+    "android:releasebuild": "react-native run-android --variant=release",
+    "android:aab": "cd android && ./gradlew bundleRelease",
+    "android:clean": "cd android && ./gradlew clean && cd ..",
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "prepare": "patch-package"
   },
   "dependencies": {
     "@react-native-community/async-storage": "1.12.1",
@@ -30,6 +34,8 @@
     "eslint": "6.5.1",
     "jest": "25.1.0",
     "metro-react-native-babel-preset": "0.59.0",
+    "patch-package": "6.2.2",
+    "postinstall": "0.7.0",
     "react-test-renderer": "16.13.1",
     "typescript": "3.8.3"
   },

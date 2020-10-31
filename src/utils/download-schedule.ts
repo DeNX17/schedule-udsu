@@ -1,10 +1,11 @@
+import {PermissionsAndroid} from 'react-native';
 import RNFetchBlob from 'rn-fetch-blob';
 import {setScheduleVersionAsync} from './storage';
 
 export const downloadScheduleAsync = async ({
   link,
   version,
-}: ScheduleLinkI): Promise<void> => {
+}: ScheduleLinkI): Promise<string> => {
   await setScheduleVersionAsync(version);
 
   const {config, fs} = RNFetchBlob;
@@ -19,7 +20,21 @@ export const downloadScheduleAsync = async ({
       description: 'Downloading schedule.',
     },
   };
-  config(options)
-    .fetch('GET', link)
-    .then((res) => {});
+
+  const granted = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+    {
+      title: 'Разрешения на сохранение файлов',
+      message: 'Требуются разрешения для сохранения',
+      buttonNegative: 'Отклонить',
+      buttonPositive: 'Разрешить',
+    },
+  );
+
+  if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+    const response = await config(options).fetch('GET', link);
+    return response.path();
+  }
+
+  return '';
 };
